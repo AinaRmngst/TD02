@@ -29,7 +29,7 @@ android {
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
-        buildConfigField("String", "API_KEY", "\"${System.getenv("API_KEY")}\"")
+        buildConfigField("String", "GEMINI_API_KEY", "\"${geminiApiKey}\"")
 
     }
 
@@ -68,7 +68,7 @@ dependencies {
     implementation(libs.kotlinx.serialization.json)
     implementation(libs.androidx.room.common.jvm)
     implementation(libs.androidx.room.runtime.jvm)
-    implementation("com.google.ai.client:generativeai:0.7.0")
+    implementation("com.google.ai.client.generativeai:generativeai:0.9.0")
     implementation(libs.gson)
     implementation(libs.generativeai)
     testImplementation(libs.junit)
