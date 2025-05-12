@@ -21,7 +21,7 @@ class ChatViewModel : ViewModel() {
     init {
         val apiKey = BuildConfig.GEMINI_API_KEY
         generativeModel = GenerativeModel(
-            modelName = "gemini-pro",
+            modelName = "models/gemini-pro",
             apiKey = apiKey
         )
     }
@@ -32,6 +32,18 @@ class ChatViewModel : ViewModel() {
         viewModelScope.launch(Dispatchers.IO) {
             try {
                 val response = generativeModel.generateContent(userInput)
+                val reply = response.text ?: "Je n'ai pas compris."
+                _messages.update { it + ChatMessage(reply, "IA") }
+            } catch (e: Exception) {
+                _messages.update { it + ChatMessage("Erreur : ${e.localizedMessage}", "IA") }
+            }
+        }
+    }
+
+    fun startConversationWithAI(prompt: String) {
+        viewModelScope.launch(Dispatchers.IO) {
+            try {
+                val response = generativeModel.generateContent(prompt)
                 val reply = response.text ?: "Je n'ai pas compris."
                 _messages.update { it + ChatMessage(reply, "IA") }
             } catch (e: Exception) {

@@ -10,17 +10,27 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import fr.unica.miage.donati.bikerzone.viewmodel.ChatViewModel
 
 @Composable
 fun ChatScreen(
+    navController: NavController,
+    modifier: Modifier,
     chatViewModel: ChatViewModel = ChatViewModel(),
-    onBack: () -> Unit
+    onBack: () -> Unit,
+    initialPrompt: String? = null,
 ) {
     val messages by chatViewModel.messages.collectAsState()
     var inputText by remember { mutableStateOf("") }
 
-    Column(modifier = Modifier.fillMaxSize()) {
+    LaunchedEffect(Unit) {
+        if (!initialPrompt.isNullOrBlank() && messages.isEmpty()) {
+            chatViewModel.startConversationWithAI(initialPrompt)
+        }
+    }
+
+    Column(modifier = modifier.fillMaxSize()) {
 
         LazyColumn(
             modifier = Modifier

@@ -15,6 +15,7 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
 import fr.unica.miage.donati.bikerzone.screens.BikeMenu
 import fr.unica.miage.donati.bikerzone.screens.CartScreen
+import fr.unica.miage.donati.bikerzone.screens.ChatScreen
 import fr.unica.miage.donati.bikerzone.screens.DetailBike
 import fr.unica.miage.donati.bikerzone.screens.HomeScreen
 import fr.unica.miage.donati.bikerzone.ui.MainLayout
@@ -32,10 +33,13 @@ object BikeList
 object CartScreen
 
 @kotlinx.serialization.Serializable
-object ChatAi
+object ChatScreen
 
 @kotlinx.serialization.Serializable
 data class BikeRoute(val idBike: Int)
+
+@kotlinx.serialization.Serializable
+data class ChatScreenWithPrompt(val bikeName: String)
 
 @Composable
 fun MyApp(
@@ -75,6 +79,16 @@ fun MyApp(
             }
         }
 
+        composable<ChatScreen>{
+            MainLayout(navController = navController, title = "Chat") { padding ->
+                ChatScreen(
+                    navController = navController,
+                    modifier = Modifier.padding(padding),
+                    onBack = { navController.popBackStack() }
+                )
+            }
+        }
+
         composable<BikeRoute>{ backStackEntry ->
             val bikeRoute =backStackEntry.toRoute<BikeRoute>()
             DetailBike(
@@ -83,6 +97,18 @@ fun MyApp(
                 navController = navController,
                 cartViewModel = cartViewModel,
             )
+        }
+
+        composable<ChatScreenWithPrompt> { backStackEntry ->
+            val bikeName = backStackEntry.toRoute<ChatScreenWithPrompt>().bikeName
+            MainLayout(navController = navController, title = "Chat for $bikeName") { padding ->
+                ChatScreen(
+                    navController = navController,
+                    modifier = Modifier.padding(padding),
+                    onBack = { navController.popBackStack() },
+                    initialPrompt = "Parle en tant qu'expert sur : $bikeName. Propose une aide à l'utilisateur."
+                )
+            }
         }
     }
 }

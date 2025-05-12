@@ -20,7 +20,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import fr.unica.miage.donati.bikerzone.BikeList
-import fr.unica.miage.donati.bikerzone.ChatAi
+import fr.unica.miage.donati.bikerzone.ChatScreen
 import fr.unica.miage.donati.bikerzone.R
 
 @Composable
@@ -60,7 +60,7 @@ fun HomeScreen(navController : NavController) {
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceEvenly
             ){
-                Button(onClick = { navController.navigate(ChatAi) }) {Text("ChatAi")}
+                Button(onClick = { navController.navigate(ChatScreen) }) {Text("ChatAi")}
                 Button(onClick = {  }) {Text("Contact Us")}
             }
 

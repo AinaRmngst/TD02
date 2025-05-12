@@ -30,6 +30,8 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
+import fr.unica.miage.donati.bikerzone.ChatScreen
+import fr.unica.miage.donati.bikerzone.ChatScreenWithPrompt
 import fr.unica.miage.donati.bikerzone.models.Bike
 import fr.unica.miage.donati.bikerzone.viewmodel.CartViewModel
 import kotlinx.coroutines.launch
@@ -97,9 +99,10 @@ fun DetailBike(
                         Icon(imageVector = Icons.Filled.Send, contentDescription = "Cart")
                     }
                     FloatingActionButton(onClick = {
+                        navController.navigate(ChatScreenWithPrompt(bike.name))
 
                     }) {
-                        Icon(imageVector = Icons.Filled.MoreVert, contentDescription = "Chat")
+                        Icon(imageVector = Icons.Filled.MoreVert, contentDescription = "Any Question?")
                     }
                 }
             }
