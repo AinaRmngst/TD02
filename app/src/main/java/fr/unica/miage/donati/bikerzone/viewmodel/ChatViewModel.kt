@@ -21,7 +21,7 @@ class ChatViewModel : ViewModel() {
     init {
         val apiKey = BuildConfig.GEMINI_API_KEY
         generativeModel = GenerativeModel(
-            modelName = "models/gemini-pro",
+            modelName = "gemini-1.5-flash",
             apiKey = apiKey
         )
     }
